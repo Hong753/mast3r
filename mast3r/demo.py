@@ -241,7 +241,7 @@ def set_scenegraph_options(inputfiles, win_cyclic, refid, scenegraph_type):
         graph_opt = gradio.Column(visible=True)
         winsize = gradio.Slider(label="Retrieval: Num. key images", value=min(20, num_files),
                                 minimum=0, maximum=num_files, step=1, visible=True)
-        win_cyclic = gradio.Checkbox(visible=False)
+        # win_cyclic = gradio.Checkbox(visible=False)
         refid = gradio.Slider(label="Retrieval: Num neighbors", value=min(num_files - 1, 5), minimum=1,
                               maximum=num_files - 1, step=1, visible=True)
 
