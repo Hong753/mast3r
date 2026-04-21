@@ -8,6 +8,7 @@
 import math
 import gradio
 import os
+import glob
 import numpy as np
 import functools
 import trimesh
@@ -147,6 +148,7 @@ def get_reconstructed_scene(outdir, gradio_delete_cache, model, retrieval_model,
     from a list of images, run mast3r inference, sparse global aligner.
     then run get_3D_model_from_scene
     """
+    filelist = sorted(glob.glob(filelist))
     imgs = load_images(filelist, size=image_size, verbose=not silent)
     if len(imgs) == 1:
         imgs = [imgs[0], copy.deepcopy(imgs[0])]
@@ -282,7 +284,7 @@ def main_demo(tmpdirname, model, retrieval_model, device, image_size, server_nam
         scene = gradio.State(None)
         gradio.HTML('<h2 style="text-align: center;">MASt3R Demo</h2>')
         with gradio.Column():
-            inputfiles = gradio.File(file_count="multiple")
+            inputfiles = gradio.Textbox(label="Image directory", value="/workspace/colmap_scenes/lg_science_park/lounge_traj2/left_*.png")
             with gradio.Row():
                 with gradio.Column():
                     with gradio.Row():
@@ -299,10 +301,10 @@ def main_demo(tmpdirname, model, retrieval_model, device, image_size, server_nam
                         matching_conf_thr = gradio.Slider(label="Matching Confidence Thr", value=0.,
                                                           minimum=0., maximum=30., step=0.1,
                                                           info="Before Fallback to Regr3D!")
-                        shared_intrinsics = gradio.Checkbox(value=False, label="Shared intrinsics",
+                        shared_intrinsics = gradio.Checkbox(value=True, label="Shared intrinsics",
                                                             info="Only optimize one set of intrinsics for all views")
                         scenegraph_type = gradio.Dropdown(available_scenegraph_type,
-                                                          value='complete', label="Scenegraph",
+                                                          value='complete' if retrieval_model is None else 'retrieval', label="Scenegraph",
                                                           info="Define how to make pairs",
                                                           interactive=True)
                         with gradio.Column(visible=False) as graph_opt:
