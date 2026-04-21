@@ -210,7 +210,7 @@ def get_reconstructed_scene(outdir, gradio_delete_cache, model, retrieval_model,
 
 
 def set_scenegraph_options(inputfiles, win_cyclic, refid, scenegraph_type):
-    num_files = len(inputfiles) if inputfiles is not None else 1
+    num_files = len(glob.glob(inputfiles)) if inputfiles is not None else 1
     max_winsize, min_winsize = 1, 1
 
     winsize = gradio.Slider(visible=False)
@@ -284,7 +284,10 @@ def main_demo(tmpdirname, model, retrieval_model, device, image_size, server_nam
         scene = gradio.State(None)
         gradio.HTML('<h2 style="text-align: center;">MASt3R Demo</h2>')
         with gradio.Column():
-            inputfiles = gradio.Textbox(label="Image directory", value="/workspace/colmap_scenes/lg_science_park/lounge_traj2/left_*.png")
+            inputfiles = gradio.Textbox(
+                label="Image glob pattern",
+                value="/workspace/colmap_scenes/lg_science_park/lounge_traj2/left_*.png"
+            )
             with gradio.Row():
                 with gradio.Column():
                     with gradio.Row():
