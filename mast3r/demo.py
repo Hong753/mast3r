@@ -347,9 +347,9 @@ def main_demo(tmpdirname, model, retrieval_model, device, image_size, server_nam
                 inputs=[inputfiles, win_cyclic, refid, scenegraph_type],
                 outputs=[graph_opt, winsize, win_cyclic, refid]
             )
-            win_cyclic.change(set_scenegraph_options,
-                              inputs=[inputfiles, win_cyclic, refid, scenegraph_type],
-                              outputs=[graph_opt, winsize, win_cyclic, refid])
+            # win_cyclic.change(set_scenegraph_options,
+            #                   inputs=[inputfiles, win_cyclic, refid, scenegraph_type],
+            #                   outputs=[graph_opt, winsize, win_cyclic, refid])
             run_btn.click(fn=recon_fun,
                           inputs=[scene, inputfiles, optim_level, lr1, niter1, lr2, niter2, min_conf_thr, matching_conf_thr,
                                   as_pointcloud, mask_sky, clean_depth, transparent_cams, cam_size,
