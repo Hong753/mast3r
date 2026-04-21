@@ -288,6 +288,7 @@ def main_demo(tmpdirname, model, retrieval_model, device, image_size, server_nam
                 label="Image glob pattern",
                 value="/workspace/colmap_scenes/lg_science_park/lounge_traj2/left_*.png"
             )
+            load_btn = gradio.Button("Load Images")
             with gradio.Row():
                 with gradio.Column():
                     with gradio.Row():
@@ -338,9 +339,14 @@ def main_demo(tmpdirname, model, retrieval_model, device, image_size, server_nam
             scenegraph_type.change(set_scenegraph_options,
                                    inputs=[inputfiles, win_cyclic, refid, scenegraph_type],
                                    outputs=[graph_opt, winsize, win_cyclic, refid])
-            inputfiles.change(set_scenegraph_options,
-                              inputs=[inputfiles, win_cyclic, refid, scenegraph_type],
-                              outputs=[graph_opt, winsize, win_cyclic, refid])
+            # inputfiles.change(set_scenegraph_options,
+            #                   inputs=[inputfiles, win_cyclic, refid, scenegraph_type],
+            #                   outputs=[graph_opt, winsize, win_cyclic, refid])
+            load_btn.click(
+                set_scenegraph_options,
+                inputs=[inputfiles, win_cyclic, refid, scenegraph_type],
+                outputs=[graph_opt, winsize, win_cyclic, refid]
+            )
             win_cyclic.change(set_scenegraph_options,
                               inputs=[inputfiles, win_cyclic, refid, scenegraph_type],
                               outputs=[graph_opt, winsize, win_cyclic, refid])
